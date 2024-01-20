@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			isLoggedIn: false,
 			message: null,
 			demo: [
 				{
@@ -16,9 +17,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+
+			login: (token) => {
+				setStore({isLoggedIn: true});
+				localStorage.setItem("token", token)
+			},
+
+			logout: () => {
+				setStore({isLoggedIn: false});
+				localStorage.removeItem("token")
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			isLogged : () => {
+				if (localStorage.getItem("token")){
+					setStore({isLoggedIn: true});
+				}
+
 			},
 
 			getMessage: async () => {
